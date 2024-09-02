@@ -102,7 +102,7 @@ export class Form extends LitElement {
         <div>Temperature (C):</div>
         <input
           id="temp"
-          type="number"
+          pattern="[0-9]+(.[0-9]+)?"
           .value=${this.temperature}
           @change=${e => this.temperature = parseFloat(e.target.value)}
         />

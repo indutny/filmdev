@@ -29,8 +29,12 @@ export class Form extends LitElement {
       gap: 1rem;
     }
 
-    label input {
+    label div {
       flex-grow: 1;
+    }
+
+    label input {
+      max-width: 4rem;
     }
 
     input[type="submit"], input[type="reset"] {
@@ -86,7 +90,7 @@ export class Form extends LitElement {
 
     return html`<form @submit=${this.onSubmit}>
       <label for="dev">
-        Developing Time (min):
+        <div>Developing Time (min):</div>
         <input
           id="dev"
           type="number"
@@ -95,7 +99,7 @@ export class Form extends LitElement {
         />
       </label>
       <label for="temp">
-        Temperature (C):
+        <div>Temperature (C):</div>
         <input
           id="temp"
           type="number"
@@ -104,7 +108,7 @@ export class Form extends LitElement {
         />
       </label>
       <label for="stop">
-        Stopbath Time (sec):
+        <div>Stopbath Time (sec):</div>
         <input
           id="stop"
           type="number"
@@ -114,7 +118,7 @@ export class Form extends LitElement {
         />
       </label>
       <label for="fix">
-        Fixing Time (min):
+        <div>Fixing Time (min):</div>
         <input
           id="fix"
           type="number"

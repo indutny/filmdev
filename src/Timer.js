@@ -14,6 +14,10 @@ const AGITATE_DURATION = 10;
 
 const blip = new Audio(blipUrl);
 
+function onBeforeUnload(event) {
+  event.preventDefault();
+}
+
 export class Timer extends LitElement {
   static styles = css`
     .timer {
@@ -99,6 +103,7 @@ export class Timer extends LitElement {
     if (this.#timer !== undefined) {
       clearInterval(this.#timer);
     }
+    window.removeEventListener('beforeunload', onBeforeUnload);
   }
 
   render() {
@@ -157,6 +162,8 @@ export class Timer extends LitElement {
 
     this.#timer = setTimeout(() => this.onTick(), 1000);
     this.computeAction();
+
+    window.addEventListener('beforeunload', onBeforeUnload);
   }
 
   onTick() {
@@ -173,8 +180,10 @@ export class Timer extends LitElement {
       this.#timer = setTimeout(() => this.onTick(), 1000 - drift);
       return;
     }
+
     this.stage = STAGE_FINISHED;
     this.#timer = undefined;
+    window.removeEventListener('beforeunload', onBeforeUnload);
   }
 
   onNext(e) {

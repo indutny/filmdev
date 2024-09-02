@@ -219,8 +219,6 @@ export class Timer extends LitElement {
 
     this.action = newAction;
     if (newAction) {
-      blip.pause();
-      blip.currentTime = 0;
       blip.play();
     }
   }

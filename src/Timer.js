@@ -48,7 +48,7 @@ export class Timer extends LitElement {
       width: 100%
       height: 4px;
       overflow: hidden;
-      background: #eee;
+      background: light-dark(#eee, #333);
 
       border-radius: 2px;
     }

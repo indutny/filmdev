@@ -65,7 +65,7 @@ export class Form extends LitElement {
   constructor() {
     super();
 
-    this.developTimeMin = 17;
+    this.developTimeMin = 22;
     this.temperature = BASE_TEMPERATURE;
     this.stopTimeSec = 20;
     this.fixTimeMin = 5;

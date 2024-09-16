@@ -14,8 +14,12 @@ const AGITATE_DURATION = 10;
 
 const blip = new Audio(blipUrl);
 
-function onBeforeUnload(event) {
-  event.preventDefault();
+class StartEvent extends Event {
+  constructor(startTime) {
+    super('start', { bubbles: true, composed: true });
+
+    this.startTime = startTime;
+  }
 }
 
 export class Timer extends LitElement {
@@ -72,6 +76,7 @@ export class Timer extends LitElement {
   static properties = {
     process: { type: String },
     duration: { type: Number },
+    startTime: { type: Number },
 
     acquiringLock: { state: true, type: Boolean },
     elapsed: { state: true, type: Number },
@@ -101,9 +106,8 @@ export class Timer extends LitElement {
     this.#wakeLock?.then(lock => lock.release());
     this.#wakeLock = undefined;
     if (this.#timer !== undefined) {
-      clearInterval(this.#timer);
+      clearTimeout(this.#timer);
     }
-    window.removeEventListener('beforeunload', onBeforeUnload);
   }
 
   render() {
@@ -147,6 +151,9 @@ export class Timer extends LitElement {
   async onStart(e) {
     e.preventDefault();
 
+    const start = new Event('start', { bubbles: true, composed: true });
+    this.dispatchEvent(start);
+
     this.acquiringLock = true;
 
     try {
@@ -162,8 +169,6 @@ export class Timer extends LitElement {
 
     this.#timer = setTimeout(() => this.onTick(), 1000);
     this.computeAction();
-
-    window.addEventListener('beforeunload', onBeforeUnload);
   }
 
   onTick() {
@@ -183,7 +188,6 @@ export class Timer extends LitElement {
 
     this.stage = STAGE_FINISHED;
     this.#timer = undefined;
-    window.removeEventListener('beforeunload', onBeforeUnload);
   }
 
   onNext(e) {

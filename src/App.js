@@ -37,7 +37,8 @@ export class App extends LitElement {
       view = keyed(this.timerIndex, html`<fd-timer
         process=${timer.process}
         duration=${timer.duration}
-        @next=${this.onNext}
+        @start=${this.onStartTimer}
+        @next=${this.onNextTimer}
       />`);
     }
 
@@ -49,7 +50,15 @@ export class App extends LitElement {
     this.timerIndex = 0;
   }
 
-  onNext() {
+  onStartTimer() {
+    const newTimers = this.timers.slice();
+    newTimers[this.timerIndex] = {
+      ...newTimers[this.timerIndex],
+      startTime: Date.now(),
+    };
+  }
+
+  onNextTimer() {
     this.timerIndex += 1;
   }
 }
